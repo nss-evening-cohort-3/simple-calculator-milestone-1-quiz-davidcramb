@@ -19,10 +19,19 @@ namespace SimpleCalculator.Tests
         public void ExpressionSeparateAsArray()
         {
             Expression expressed = new Expression("1+1");
-            string[] expected = { "1", "+", "1" };
-            expressed.splitExpressionString(expressed.expression_as_string);
-            string[] actual = expressed.expression_as_array;
+            char[] expected = {'1', '+', '1'};
+            
+            char[] actual = expressed.splitExpressionString(expressed.expression_as_string);
             CollectionAssert.AreEquivalent(expected, actual);
+        }
+        [TestMethod]
+        public void ExpressionDoesNotSplit()
+        {
+            Expression expressed = new Expression("1+1");
+            string expected = "1+1";
+            expressed.splitExpressionString(expressed.expression_as_string);
+            string actual = expressed.expression_as_array[0];
+            Assert.AreSame(expected, actual);
         }
     }
 }
