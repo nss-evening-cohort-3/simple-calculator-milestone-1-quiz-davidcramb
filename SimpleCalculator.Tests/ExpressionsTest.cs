@@ -41,10 +41,32 @@ namespace SimpleCalculator.Tests
         public void ExpressionOperandIsFound()
         {
             Expression expressed = new Expression();
-            expressed.ExpressionSplit("5+9");
+            expressed.ExpressionSplit("552+9");
             char expected = '+';
             char actual = expressed.operand;
             Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ExpressionFindOperandGetsOtherOperandsMinus()
+        {
+            List<char> expectedCharList = new List<char> { '-', '/', '%', '*' };
+            List<char> actualCharList = new List<char>();
+            Expression minus = new Expression();
+            minus.ExpressionSplit("1000-5000");
+            Expression divide = new Expression();
+            divide.ExpressionSplit("22/1");
+            Expression modulo = new Expression();
+            modulo.ExpressionSplit("5%3");
+            Expression multiply = new Expression();
+            multiply.ExpressionSplit("15*99");
+
+            actualCharList.Add(minus.operand);
+            actualCharList.Add(divide.operand);
+            actualCharList.Add(modulo.operand);
+            actualCharList.Add(multiply.operand);
+
+            CollectionAssert.AreEquivalent(expectedCharList, actualCharList);
+
         }
     }
 }
