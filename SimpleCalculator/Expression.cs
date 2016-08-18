@@ -11,15 +11,19 @@ namespace SimpleCalculator
         public Expression(string userGivenExpression)
         {
             expression_as_string = userGivenExpression;
-            expression_as_array = new string[3];
             expression_as_char_array = expression_as_string.ToCharArray();
+            expression_as_list = new List<string>();
+            expression_list = new List<string>();
+
             //LHS = LHS; 
             //RHS = RHS;
             operand = operand;
 
         }
+        public string[] validOperand = { "+", "-", "%", "/", "*" };
         public string expression_as_string { get; set; }
-        public string[] expression_as_array { get; set; }
+        public List<string> expression_as_list { get; set; }
+        public List<string> expression_list { get; set; }
         public char[] expression_as_char_array { get; set; }
         public int LHS { get; set; }
         public int RHS { get; set; }
@@ -41,16 +45,43 @@ namespace SimpleCalculator
             return expressionCharArray;
         }
 
-        public string[] ExpressionAsArray(char[] expression_as_char_array)
+        public List<string> ConvertExpressionToList(char[] expression_as_char_array)
         {
-            int operand = Array.IndexOf(expression_as_char_array, ('+' | '-' | '%' | '/' | '*'));
-            //find index of operand to use as length of for loop, ignore foreach code below
-            foreach(var character in expression_as_char_array)
+            for (int i = 0; i < expression_as_char_array.Length; i++)
             {
+                expression_as_list.Add(expression_as_char_array[i].ToString());
             }
-            //
+            return expression_as_list;
         }
 
-        
+        public List<string> CreateConcatenatedList(List<string> expression_as_list)
+        {
+            string LHS = null;
+            string RHS = null;
+            string operand = null;
+            int operandIndex = 0;
+            for (int i = 0; i < expression_as_list.Count; i++)
+            {
+                if (expression_as_list[i] == "+" || expression_as_list[i] == "-" || expression_as_list[i] == "%" || expression_as_list[i] == "*" || expression_as_list[i] == "*")
+                {
+                    operand = expression_as_list[i];
+                    operandIndex = expression_as_list.IndexOf(expression_as_list[i]);
+                }
+            }
+            //get LHS
+            for (int i = 0; i < operandIndex; i++)
+            {
+                LHS += expression_as_list[i];
+            }
+            for (int i = operandIndex; i <= expression_as_list.Count; i++)
+            {
+                RHS += expression_as_list[i];
+            }
+            expression_list.Add(LHS);
+            expression_list.Add(operand);
+            expression_list.Add(RHS);
+            
+            return expression_list;
+        }
     }
 }

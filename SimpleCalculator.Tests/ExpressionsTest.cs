@@ -25,17 +25,17 @@ namespace SimpleCalculator.Tests
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
-        [TestMethod]
-        public void ExpressionDoesNotSplit()
-        {
-            //Going down a failed path to split the string array
-            Expression expressed = new Expression("1+1");
-            string expected = "1+1";
-            expressed.splitExpressionString(expressed.expression_as_string);
-            string actual = expressed.expression_as_array[0]; 
+        //[TestMethod]
+        //public void ExpressionDoesNotSplit()
+        //{
+        //    //Going down a failed path to split the string array
+        //    Expression expressed = new Expression("1+1");
+        //    string expected = "1+1";
+        //    expressed.splitExpressionString(expressed.expression_as_string);
+        //    string actual = expressed.expression_as_array[0]; 
 
-            Assert.AreSame(expected, actual);
-        }
+        //    Assert.AreSame(expected, actual);
+        //}
         [TestMethod]
         public void ExpressionCharArrayDisassembledFurther()
         {
@@ -51,19 +51,68 @@ namespace SimpleCalculator.Tests
             Expression expressed = new Expression("11+22");
             expressed.splitExpressionString(expressed.expression_as_string);
             char[] charArray = { '1', '1', '+', '2', '2' };
-            Int32.Parse(charArray[2]);
+            Int32.Parse(charArray[0].ToString());
         }
         [TestMethod]
         public void ExpressionConverCharArrayTo3StringArray()
         {
             Expression expressed = new Expression("11+22");
-            expressed.splitExpressionString(expressed.expression_as_string); //"1+2"
+            expressed.splitExpressionString(expressed.expression_as_string); //"11+22"
             string[] expressionArray = { "11", "+", "22" };
             int expected = 11;
-                        Int32.Parse(expected[0]);
-            Assert.AreEqual(expected[0], 11);
+            //            Int32.Parse(expected[0]);
+            //Assert.AreEqual(expected[0], 11);
+        }
+        [TestMethod]
+        public void ExpressionConvertCharArrayToListReturnsList()
+        {
+            Expression expressed = new Expression("111+222");
+            List<string> actual = expressed.ConvertExpressionToList(expressed.expression_as_char_array);
+            Assert.IsInstanceOfType(actual, typeof(List<string>));
+        }
+        [TestMethod]
+        public void ExpressionListReturnsLHSinList()
+        {
+            Expression expressed = new Expression("11+22");
+            string expected = "11";
+            List<string> LHS = expressed.ConvertExpressionToList(expressed.expression_as_char_array);
+            string actual = LHS[0];
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ExpressionFindOperand()
+        {
+            char[] expressionCharArray = { '1', '2', '3', '+', '4', '5' };
+            int operand = Array.IndexOf(expressionCharArray, '+');
+            int expected = 3;
+            int actual = operand;
+            Assert.IsTrue(expected == actual);
+        }
+        //[TestMethod]
+        //public void ExpressionException()
+        //{
+        //    Expression expressed = new Expression("111+222");
+        //    expressed.ConvertExpressionToList(expressed.expression_as_char_array);
+        //    expressed.GetLHSFromExpressionList(expressed.expression_as_list);
+        //}
+        [TestMethod]
+        public void ExpressionCannotUseBinarySearchMethod()
+        {
+            //Expression expressed = new Expression("100+200");
+            List<string> test = new List<string> { "1", "2", "+", "2" };
+            int index = test.BinarySearch("+");
+            Assert.AreNotEqual(2, index);
+        }
+        [TestMethod]
+        public void ExpressionConcatenatedListReturnedLHSRHSOperator()
+        {
+            Expression expressed = new Expression("135-400");
+            expressed.ConvertExpressionToList(expressed.expression_as_char_array);
+            expressed.CreateConcatenatedList(expressed.expression_as_list);
+            List<string> Expected = new List<string> { "135", "-", "400" };
+            CollectionAssert.AreEqual(Expected, expressed.expression_list);
+            CollectionAssert.AreEquivalent(Expected, expressed.expression_list);
 
         }
-
     }
 }
