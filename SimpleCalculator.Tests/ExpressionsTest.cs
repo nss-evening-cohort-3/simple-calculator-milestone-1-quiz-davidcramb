@@ -42,7 +42,6 @@ namespace SimpleCalculator.Tests
         {
             Expression expressed = new Expression();
             expressed.ExpressionSplit("5+9");
-            expressed.findOperand();
             char expected = '+';
             char actual = expressed.operand;
             Assert.AreEqual(expected, actual);

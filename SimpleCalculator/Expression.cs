@@ -26,9 +26,8 @@ namespace SimpleCalculator
             expression_array = expression_as_string.Split(validOperand);
             LHS = Int32.Parse(expression_array[0]);
             RHS = Int32.Parse(expression_array[1]);
-            
+            findOperand();
         }
-
 
         public void findOperand()
         {
