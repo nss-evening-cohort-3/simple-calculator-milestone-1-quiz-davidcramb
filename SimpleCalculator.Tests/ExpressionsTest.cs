@@ -68,6 +68,18 @@ namespace SimpleCalculator.Tests
             CollectionAssert.AreEquivalent(expectedCharList, actualCharList);
 
         }
+        [TestMethod]
+        public void ExpressionIgnoresWhitespace()
+        {
+            Expression add = new Expression();
+            add.ExpressionSplit("  5    +   7");
+            int expectedLHS = 5;
+            int expectedRHS = 7;
+            char expectedOperand = '+';
+            Assert.AreEqual(expectedLHS, add.LHS);
+            Assert.AreEqual(expectedRHS, add.RHS);
+            Assert.AreEqual(expectedOperand, add.operand);
+        }
     }
 }
 //[TestMethod]
