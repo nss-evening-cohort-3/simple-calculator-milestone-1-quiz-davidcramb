@@ -20,8 +20,8 @@ namespace SimpleCalculator
             //While loop to kee
             while (keepGoing)
             {
-                string userPrompt = Console.ReadLine().ToLower();
                 Console.WriteLine("Add, Subtract, Multiply, Divide, or get a Remainder");
+                string userPrompt = Console.ReadLine().ToLower();
                 Console.WriteLine(prompt);
                 
                 if (quitArray.Any(userPrompt.Contains))
@@ -29,7 +29,14 @@ namespace SimpleCalculator
                     keepGoing = false;
                     Console.WriteLine("Bye!");
                     Console.ReadLine();
-
+                }
+                else
+                {
+                    Expression userExpression = new Expression();
+                    userExpression.ExpressionSplit(userPrompt);
+                    Calculate calculation = new Calculate(userExpression.LHS, userExpression.RHS, userExpression.operand);
+                    calculation.DetermineOperation();
+                    Console.WriteLine(calculation.result);
                 }
             }
         }

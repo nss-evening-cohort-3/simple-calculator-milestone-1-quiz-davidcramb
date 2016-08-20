@@ -19,6 +19,7 @@ namespace SimpleCalculator
         public int LHS { get; set; }
         public int RHS { get; set; }
         public char operand { get; set; }
+        int operationcounter { get; set; }
 
         public void ExpressionSplit (string expression_as_string)
         {
@@ -33,6 +34,12 @@ namespace SimpleCalculator
         {
             int LHS_Length = LHS.ToString().Length;
             char operand_from_string = expression_as_string[LHS_Length];
+            //if there is trailing whitespace before the operand, this while loop will continue until the operand is found
+            while (char.IsWhiteSpace(operand_from_string))
+            {
+                LHS_Length++;
+                operand_from_string = expression_as_string[LHS_Length];
+            }
             operand = operand_from_string;
         }
     }

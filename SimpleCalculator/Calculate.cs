@@ -51,11 +51,26 @@ namespace SimpleCalculator
         }
         public void modulo(int x, int y)
         {
-             result =  x % y;
+            try
+            {
+                result = x % y;
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("You cannot divide by zero.");
+            }
         }
         public void divide(int x, int y)
         {
-             result = x / y;
+            try
+            {
+                result = x / y;
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("You cannot divide by zero.");
+            }
+
         }
         public void multiply(int x, int y)
         {
