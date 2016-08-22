@@ -20,16 +20,24 @@ namespace SimpleCalculator
             last_answer.Push(result);
         }
 
-        public int GetLastAnswer()
+        public void GetLastAnswer()
         {
             int answer = last_answer.Pop();
-            return answer;
+            Console.WriteLine("The last answer was...{0}", answer);
         }
         public void SetLastExpressionQueried(string userExpression)
         {
             last_expression = new Stack<string>();
             last_expression.Push(userExpression);
         }
+
+        public void GetLastExpressionQueried()
+        {
+            string query = last_expression.Pop();
+            Console.WriteLine("The last query was...{0}", query);
+        }
+
+
 
     }
 }

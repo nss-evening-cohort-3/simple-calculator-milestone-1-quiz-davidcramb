@@ -14,6 +14,7 @@ namespace SimpleCalculator
             y = rhs;
             this.operand = operand;
         }
+
         public int x { get; set; }
         public int y { get; set; }
         public char operand { get; set; }

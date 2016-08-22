@@ -30,11 +30,16 @@ namespace SimpleCalculator
                 LHS = Int32.Parse(expression_array[0]);
                 RHS = Int32.Parse(expression_array[1]);
                 findOperand();
+                if (expression_array.Length > 2) 
+                {
+                    throw new Exception ("This program only accepts two integers and an operator (ie, x + y)");
+                }
             }
             catch (FormatException e)
             {
                 Console.WriteLine("Invalid format, try again. For example: 10 + 5 or 700 / 7");
             }
+
         }
 
         public void findOperand()
@@ -53,7 +58,7 @@ namespace SimpleCalculator
             }
             catch (FormatException e)
             {
-                Console.WriteLine("Try another format, for example: 10 + 5 or 7 * 12");
+                throw new Exception ("Try another format, for example: 10 + 5 or 7 * 12");
             }
         }
     }

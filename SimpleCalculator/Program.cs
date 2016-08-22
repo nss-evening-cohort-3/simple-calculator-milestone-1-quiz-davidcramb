@@ -14,6 +14,7 @@ namespace SimpleCalculator
             bool keepGoing = true;
             int counter = 0;
             Regex pemdas = new Regex(@"(\s*)?[\d](\s*)?(\+|\-|\*|\%|\/)(\s*)?[\d]+(\s*)?"); //not sure if i will use this
+            Regex constcheck = new Regex(@"(?<variable>[a-z])\s=\s(?<integer>[0-9]+)");
             string[] quitArray = { "no", "quit", "stop", "exit"};
             Stack lastExpression = new Stack();
             
@@ -34,11 +35,26 @@ namespace SimpleCalculator
                 }
                 else if (userPrompt == "last")
                 {
-                    lastExpression.GetLastAnswer();
+                    try
+                    {
+                        lastExpression.GetLastAnswer();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
                 else if (userPrompt == "lastq")
                 {
-                    //lastExpression.GetLastExpressionQueried(userPrompt);
+
+                    try
+                    {
+                        lastExpression.GetLastExpressionQueried();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
                 else
                 {
@@ -46,10 +62,10 @@ namespace SimpleCalculator
                     try
                     { 
                         userExpression.ExpressionSplit(userPrompt);
-                        //lastExpression.LastExpressionQueried(userPrompt);
                         Calculate calculation = new Calculate(userExpression.LHS, userExpression.RHS, userExpression.operand);
                         calculation.DetermineOperation();
-                        //lastExpression.LastAnswer(calculation.result);
+                        lastExpression.SetLastExpressionQueried(userPrompt);
+                        lastExpression.SetLastAnswer(calculation.result);
                         Console.WriteLine(calculation.result);
                         counter++;
                     }
