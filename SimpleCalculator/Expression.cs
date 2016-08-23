@@ -10,8 +10,9 @@ namespace SimpleCalculator
     {
         public Expression()
         {
+             Constant.userVars = new Dictionary<char, int>();
         }
-
+        public Stack Constant = new Stack();
         public char[] validOperand = { '+','-','%','/','*'};
         public char[] digits = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
         public string expression_as_string { get; set; }
@@ -27,6 +28,7 @@ namespace SimpleCalculator
             {
                 this.expression_as_string = expression_as_string.Trim();
                 expression_array = expression_as_string.Split(validOperand);
+                //check first to see if these are characters or integers and if the key exists in the Constant Dictionary
                 LHS = Int32.Parse(expression_array[0]);
                 RHS = Int32.Parse(expression_array[1]);
                 findOperand();

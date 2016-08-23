@@ -13,11 +13,14 @@ namespace SimpleCalculator
         {
             bool keepGoing = true;
             int counter = 0;
-            Regex pemdas = new Regex(@"(\s*)?[\d](\s*)?(\+|\-|\*|\%|\/)(\s*)?[\d]+(\s*)?"); //not sure if i will use this
-            Regex constcheck = new Regex(@"(?<variable>[a-z])\s=\s(?<integer>[0-9]+)");
+            string constPat = @"(?<variable>[a-z])\s=\s(?<integer>[0-9]+)";
+            Regex constCheck = new Regex(constPat, RegexOptions.IgnoreCase);
             string[] quitArray = { "no", "quit", "stop", "exit"};
             Stack lastExpression = new Stack();
+            //Stack constants = new Stack();
             
+            Expression userExpression = new Expression();
+
             Console.WriteLine("This is a Calculator. There are many like it but this one is mine.");
             //While loop to kee
             while (keepGoing)
@@ -26,6 +29,7 @@ namespace SimpleCalculator
                 Console.WriteLine("Add, Subtract, Multiply, Divide, or get a Remainder");
                 Console.Write("[{0}] {1} ", counter, prompt);
                 string userPrompt = Console.ReadLine().ToLower();
+                Match m = constCheck.Match(userPrompt);
 
                 if (quitArray.Any(userPrompt.Contains))
                 {
@@ -56,11 +60,16 @@ namespace SimpleCalculator
                         Console.WriteLine(e.Message);
                     }
                 }
+                else if (m.Success)
+                {
+                    char x = char.Parse(m.Groups[1].ToString());
+                    int y = int.Parse(m.Groups[2].ToString());
+                    userExpression.Constant.SetUserVariableToThisValue(x, y);
+                }
                 else
                 {
-                    Expression userExpression = new Expression();
                     try
-                    { 
+                    {
                         userExpression.ExpressionSplit(userPrompt);
                         Calculate calculation = new Calculate(userExpression.LHS, userExpression.RHS, userExpression.operand);
                         calculation.DetermineOperation();
