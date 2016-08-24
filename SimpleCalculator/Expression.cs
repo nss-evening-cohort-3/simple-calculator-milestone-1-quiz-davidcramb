@@ -21,16 +21,29 @@ namespace SimpleCalculator
         public int RHS { get; set; }
         public char operand { get; set; }
         int operationcounter { get; set; }
-
+        //oh god why didn't I use regex
         public void ExpressionSplit (string expression_as_string)
         {
             try
             {
+                //regex's are fun to write and I didn't do it.
                 this.expression_as_string = expression_as_string.Trim();
+                bool containsConstant = false;
+                int x;
+                int y;
                 expression_array = expression_as_string.Split(validOperand);
-                //check first to see if these are characters or integers and if the key exists in the Constant Dictionary
-                LHS = Int32.Parse(expression_array[0]);
-                RHS = Int32.Parse(expression_array[1]);
+                Int32.TryParse(expression_array[0], out x);
+                Int32.TryParse(expression_array[1], out y);
+                if (x == 0)
+                {
+                    x = Constant.userVars[Convert.ToChar(expression_array[0])];
+                }
+                if (y == 0)
+                {
+                    y = Constant.userVars[Convert.ToChar(expression_array[1])];
+                }
+                LHS = x;
+                RHS = y;
                 findOperand();
                 if (expression_array.Length > 2) 
                 {
@@ -40,9 +53,11 @@ namespace SimpleCalculator
             catch (FormatException e)
             {
                 Console.WriteLine("Invalid format, try again. For example: 10 + 5 or 700 / 7");
+                Console.WriteLine(e.Message);
             }
 
         }
+
 
         public void findOperand()
         {
@@ -62,6 +77,12 @@ namespace SimpleCalculator
             {
                 throw new Exception ("Try another format, for example: 10 + 5 or 7 * 12");
             }
+        }
+        public void CreateVariable(string variable, string value)
+        {
+            char x = char.Parse(variable);
+            int y = int.Parse(value);
+            Constant.SetUserVariableToThisValue(x, y);
         }
     }
 }

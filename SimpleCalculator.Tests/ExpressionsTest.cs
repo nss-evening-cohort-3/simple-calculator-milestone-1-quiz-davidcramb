@@ -41,7 +41,7 @@ namespace SimpleCalculator.Tests
         public void ExpressionOperandIsFound()
         {
             Expression expressed = new Expression();
-            expressed.ExpressionSplit("552+9");
+            expressed.ExpressionSplit("12+9");
             char expected = '+';
             char actual = expressed.operand;
             Assert.AreEqual(expected, actual);

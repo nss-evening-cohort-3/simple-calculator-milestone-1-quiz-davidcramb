@@ -60,9 +60,7 @@ namespace SimpleCalculator
                 }
                 else if (m.Success)
                 {
-                    char x = char.Parse(m.Groups[1].ToString());
-                    int y = int.Parse(m.Groups[2].ToString());
-                    userExpression.Constant.SetUserVariableToThisValue(x, y);
+                    userExpression.CreateVariable(m.Groups[1].ToString(), m.Groups[2].ToString());
                 }
                 else
                 {
