@@ -34,6 +34,7 @@ namespace SimpleCalculator
                 expression_array = this.expression_as_string.Split(validOperand);
                 if (!Int32.TryParse(expression_array[0], out x))
                 {
+                
                     x = Constant.userVars[Convert.ToChar(expression_array[0])];
                 }
                 if (!Int32.TryParse(expression_array[1], out y))
