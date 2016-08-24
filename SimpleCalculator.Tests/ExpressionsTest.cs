@@ -91,6 +91,15 @@ namespace SimpleCalculator.Tests
             dictionary.Add('x', 5);
             Console.WriteLine(dictionary['x']);
         }
+        [TestMethod]
+        public void ExpressionTakesUserDefinedConstant()
+        {
+            Expression add = new Expression();
+            Stack stack = new Stack();
+            add.Constant.userVars.Add('x', 30);
+            add.ExpressionSplit("x+5");
+            Console.WriteLine(add.LHS);
+        }
     }
 }
 //[TestMethod]

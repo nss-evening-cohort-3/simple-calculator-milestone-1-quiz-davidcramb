@@ -26,19 +26,17 @@ namespace SimpleCalculator
         {
             try
             {
-                //regex's are fun to write and I didn't do it.
                 this.expression_as_string = expression_as_string.Trim();
+                this.expression_as_string = expression_as_string.Replace(" ",String.Empty);
                 bool containsConstant = false;
                 int x;
                 int y;
-                expression_array = expression_as_string.Split(validOperand);
-                Int32.TryParse(expression_array[0], out x);
-                Int32.TryParse(expression_array[1], out y);
-                if (x == 0)
+                expression_array = this.expression_as_string.Split(validOperand);
+                if (!Int32.TryParse(expression_array[0], out x))
                 {
                     x = Constant.userVars[Convert.ToChar(expression_array[0])];
                 }
-                if (y == 0)
+                if (!Int32.TryParse(expression_array[1], out y))
                 {
                     y = Constant.userVars[Convert.ToChar(expression_array[1])];
                 }
@@ -56,7 +54,7 @@ namespace SimpleCalculator
                 Console.WriteLine(e.Message);
             }
 
-        }
+}
 
 
         public void findOperand()
