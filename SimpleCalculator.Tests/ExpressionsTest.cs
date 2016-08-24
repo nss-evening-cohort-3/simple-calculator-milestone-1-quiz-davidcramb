@@ -80,6 +80,17 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(expectedRHS, add.RHS);
             Assert.AreEqual(expectedOperand, add.operand);
         }
+        [TestMethod]
+        public void ExpressionCheckForConstant()
+        {
+            Expression add = new Expression();
+            add.ExpressionSplit("5 + x");
+            string[] barg = { "x" };
+            Console.WriteLine(Char.IsLetter(char.Parse(barg[0])));
+            Dictionary<char, int> dictionary = new Dictionary<char, int>();
+            dictionary.Add('x', 5);
+            Console.WriteLine(dictionary['x']);
+        }
     }
 }
 //[TestMethod]

@@ -17,12 +17,10 @@ namespace SimpleCalculator
             Regex constCheck = new Regex(constPat, RegexOptions.IgnoreCase);
             string[] quitArray = { "no", "quit", "stop", "exit"};
             Stack lastExpression = new Stack();
-            //Stack constants = new Stack();
-            
             Expression userExpression = new Expression();
 
             Console.WriteLine("This is a Calculator. There are many like it but this one is mine.");
-            //While loop to kee
+
             while (keepGoing)
             {
                 var prompt = ">";
