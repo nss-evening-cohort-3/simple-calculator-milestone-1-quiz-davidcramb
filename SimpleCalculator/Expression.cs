@@ -36,6 +36,7 @@ namespace SimpleCalculator
                 Int32.TryParse(expression_array[1], out y);
                 if (x == 0)
                 {
+                
                     x = Constant.userVars[Convert.ToChar(expression_array[0])];
                 }
                 if (y == 0)
